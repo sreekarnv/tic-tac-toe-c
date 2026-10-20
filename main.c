@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 void printBoard(char* _row, int _rowLength)
@@ -53,14 +55,27 @@ int main() {
 
     while (true)
     {
-        int entry;
+        long entry;
         char* currentPlay = isPlayer1Turn ? "Player 1" : "Player 2";
         char input = isPlayer1Turn ? 'X' : 'O';
 
-        do {
-            printf("%s's turn: ", currentPlay);
-            scanf("%d", &entry);
-        } while (!entry || entry < 1 || entry > 9);
+        char buffer[100];
+
+        while (true)
+        {
+            printf("%s's Turn: ", currentPlay);
+            if (fgets(buffer, sizeof(buffer), stdin) != NULL)
+            {
+                if (strlen(buffer) == 1)
+                {
+                    printf("Received Empty Input. Try Again!!\n");
+                    continue;
+                }
+
+                entry = strtol(buffer, NULL, 10);
+                break;
+            }
+        }
 
         if (row[entry - 1] == 'X' || row[entry - 1] == 'O')
         {
