@@ -6,7 +6,7 @@
 #define BOARD_SIZE 9
 #define WIN_COMBINATION 8
 
-void printBoard(char* row)
+void printBoard(const char* row)
 {
     printf("Board:\n\n");
     for (size_t i = 0; i < BOARD_SIZE; i++)
@@ -20,7 +20,7 @@ void printBoard(char* row)
     printf("\n\n");
 }
 
-bool validateBoard(char* row, char playerInput)
+bool validateBoard(const char* row, char playerInput)
 {
     static int correct[WIN_COMBINATION][3] = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
