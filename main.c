@@ -3,12 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ROW_LENGTH 8
+#define BOARD_SIZE 9
+#define WIN_COMBINATION 8
 
-void printBoard(char* row)
+void printBoard(const char* row)
 {
     printf("Board:\n\n");
-    for (size_t i = 0; i <= ROW_LENGTH; i++)
+    for (size_t i = 0; i < BOARD_SIZE; i++)
     {
         printf("%c\t", row[i]);
         if ((i + 1) % 3 == 0)
@@ -19,15 +20,15 @@ void printBoard(char* row)
     printf("\n\n");
 }
 
-bool validateBoard(char* row, char playerInput)
+bool validateBoard(const char* row, char playerInput)
 {
-    int correct[ROW_LENGTH][3] = {
+    static int correct[WIN_COMBINATION][3] = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
         {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
         {0, 4, 8}, {2, 4, 6}
     };
 
-    for (size_t i = 0; i < ROW_LENGTH; i++)
+    for (size_t i = 0; i < WIN_COMBINATION; i++)
     {
         if (
             row[correct[i][0]] == playerInput &&
@@ -44,7 +45,7 @@ bool validateBoard(char* row, char playerInput)
 
 
 int main() {
-    char row[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char row[BOARD_SIZE] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     printf("\nWelcome to Tic Tac Toe!!!\n\n");
     printf("Player 1 uses 'X'\n");
@@ -72,7 +73,16 @@ int main() {
                     continue;
                 }
 
-                entry = strtol(buffer, NULL, 10);
+
+                long _entry = strtol(buffer, NULL, 10);
+
+                if (_entry < 1 || _entry > 9)
+                {
+                    printf("Received Invalid Entry. Try Entering Digits (1-9).\n");
+                    continue;
+                }
+
+                entry = _entry;
                 break;
             }
         }
