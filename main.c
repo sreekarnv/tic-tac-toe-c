@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define ROW_LENGTH 8
 
-void printBoard(char* _row, int _rowLength)
+void printBoard(char* row)
 {
     printf("Board:\n\n");
-    for (size_t i = 0; i < _rowLength; i++)
+    for (size_t i = 0; i <= ROW_LENGTH; i++)
     {
-        printf("%c\t", _row[i]);
+        printf("%c\t", row[i]);
         if ((i + 1) % 3 == 0)
         {
             printf("\n");
@@ -18,20 +19,20 @@ void printBoard(char* _row, int _rowLength)
     printf("\n\n");
 }
 
-bool boardComplete(char* _row, char _playerInput)
+bool validateBoard(char* row, char playerInput)
 {
-    int correct[8][3] = {
+    int correct[ROW_LENGTH][3] = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
         {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
         {0, 4, 8}, {2, 4, 6}
     };
 
-    for (int i = 0; i < 8; i++)
+    for (size_t i = 0; i < ROW_LENGTH; i++)
     {
         if (
-            _row[correct[i][0]] == _playerInput &&
-            _row[correct[i][1]] == _playerInput &&
-            _row[correct[i][2]] == _playerInput
+            row[correct[i][0]] == playerInput &&
+            row[correct[i][1]] == playerInput &&
+            row[correct[i][2]] == playerInput
         )
         {
             return true;
@@ -44,7 +45,6 @@ bool boardComplete(char* _row, char _playerInput)
 
 int main() {
     char row[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    int rowLength = sizeof(row) / sizeof(char);
 
     printf("\nWelcome to Tic Tac Toe!!!\n\n");
     printf("Player 1 uses 'X'\n");
@@ -87,24 +87,21 @@ int main() {
             row[entry - 1] = input;
         }
 
-        printBoard(row, rowLength);
+        printBoard(row);
 
-        if (boardComplete(row, input)) {
+        if (validateBoard(row, input)) {
             printf("%s Wins!!!\n\n", currentPlay);
             break;
         }
-        else
-        {
-            if (moveCount == 8) {
-                printf("Draw!!");
-                break;
-            }
+
+        if (moveCount == 8) {
+            printf("Draw!!");
+            break;
         }
 
         isPlayer1Turn = !isPlayer1Turn;
         moveCount++;
     }
-
 
     return 0;
 }
