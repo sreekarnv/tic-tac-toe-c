@@ -16,6 +16,30 @@ void printBoard(char* _row, int _rowLength)
     printf("\n\n");
 }
 
+bool boardComplete(char* _row, char _playerInput)
+{
+    int correct[8][3] = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
+        {0, 4, 8}, {2, 4, 6}
+    };
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (
+            _row[correct[i][0]] == _playerInput &&
+            _row[correct[i][1]] == _playerInput &&
+            _row[correct[i][2]] == _playerInput
+        )
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 int main() {
     char row[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     int rowLength = sizeof(row) / sizeof(char);
@@ -25,15 +49,20 @@ int main() {
     printf("Player 2 uses 'O'\n\n");
 
     bool isPlayer1Turn = true;
-    int entry;
+    int moveCount = 0;
+
     while (true)
     {
+        int entry;
         char* currentPlay = isPlayer1Turn ? "Player 1" : "Player 2";
         char input = isPlayer1Turn ? 'X' : 'O';
-        printf("%s's turn: ", currentPlay);
-        scanf("%d", &entry);
 
-        if (row[entry - 1] != '-')
+        do {
+            printf("%s's turn: ", currentPlay);
+            scanf("%d", &entry);
+        } while (!entry || entry < 1 || entry > 9);
+
+        if (row[entry - 1] == 'X' || row[entry - 1] == 'O')
         {
             printf("Already some entry exists. Try a different spot!!\n");
             continue;
@@ -44,8 +73,23 @@ int main() {
         }
 
         printBoard(row, rowLength);
+
+        if (boardComplete(row, input)) {
+            printf("%s Wins!!!\n\n", currentPlay);
+            break;
+        }
+        else
+        {
+            if (moveCount == 8) {
+                printf("Draw!!");
+                break;
+            }
+        }
+
         isPlayer1Turn = !isPlayer1Turn;
+        moveCount++;
     }
+
 
     return 0;
 }
