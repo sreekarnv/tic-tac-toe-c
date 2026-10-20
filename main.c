@@ -49,6 +49,7 @@ int main() {
     printf("Player 2 uses 'O'\n\n");
 
     bool isPlayer1Turn = true;
+    int moveCount = 0;
 
     while (true)
     {
@@ -77,9 +78,18 @@ int main() {
             printf("%s Wins!!!\n\n", currentPlay);
             break;
         }
+        else
+        {
+            if (moveCount == 8) {
+                printf("Draw!!");
+                break;
+            }
+        }
 
         isPlayer1Turn = !isPlayer1Turn;
+        moveCount++;
     }
+
 
     return 0;
 }
