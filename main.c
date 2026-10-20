@@ -16,9 +16,8 @@ void printBoard(char* _row, int _rowLength)
     printf("\n\n");
 }
 
-
 int main() {
-    char row[9] = {'-', '-', '-', '-', '-', '-', '-', '-', '-'};
+    char row[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
     int rowLength = sizeof(row) / sizeof(char);
 
     printf("\nWelcome to Tic Tac Toe!!!\n\n");
