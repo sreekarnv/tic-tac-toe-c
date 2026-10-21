@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+#include "TicTacToe.h"
 
-#define BOARD_SIZE 9
-#define WIN_COMBINATION 8
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 
 void printBoard(const char* row)
 {
@@ -43,8 +42,8 @@ bool validateBoard(const char* row, char playerInput)
     return false;
 }
 
-
-int main() {
+int playGame()
+{
     char row[BOARD_SIZE] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     printf("\nWelcome to Tic Tac Toe!!!\n\n");
